@@ -7,10 +7,8 @@ from menu import Menu
 from highscores import Highscores
 from dialog import NameDialog
 
-# Инициализация Pygame
 pygame.init()
 
-# Загрузка конфигурации
 with open("config.json", "r", encoding="utf-8") as f:
     config = json.load(f)
 
@@ -20,11 +18,10 @@ SCREEN_HEIGHT = 620
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Python Tetris")
 
-# Шрифты
+
 title_font = pygame.font.Font(None, 40)
 help_font = pygame.font.Font(None, 30)
 
-# Инициализация компонентов
 colors = Colors()
 highscores = Highscores()
 
@@ -111,7 +108,7 @@ def main():
                         game.rotate()
                 if event.type == GAME_UPDATE and not game.game_over:
                     game.move_down()
-            # Отрисовка игры
+
             screen.fill(colors.dark_blue)
             game.draw(screen)
             score_text = title_font.render(f"Счет: {game.score}", True, colors.white)
@@ -137,11 +134,9 @@ def main():
                         clock.tick(60)
                     if dialog.input_text.strip():
                         highscores.add_score(dialog.input_text.strip(), game.score)
-                    # После ввода имени возвращаемся в меню
                     current_screen = "menu"
                     game.reset()
                 else:
-                    # Если не рекорд - показываем стандартный экран проигрыша
                     game.game_over_sound.play()
                     choice = game.handle_game_over(screen)
                     if choice == "menu":
